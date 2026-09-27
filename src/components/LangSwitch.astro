@@ -1,0 +1,35 @@
+---
+import type { Lang } from '../types/lang';
+import { alternateUrls } from '../i18n/utils';
+
+interface Props {
+	lang: Lang;
+	path: string;
+}
+
+const { lang, path } = Astro.props;
+const urls = alternateUrls(path);
+---
+
+<div class="flex items-center gap-1 rounded-full border border-ink/10 bg-card px-1 py-0.5 text-sm">
+	<a
+		href={urls.zh}
+		class:list={[
+			'rounded-full px-2.5 py-1 transition',
+			lang === 'zh' ? 'bg-ink text-canvas' : 'text-muted hover:text-ink',
+		]}
+		aria-current={lang === 'zh' ? 'page' : undefined}
+	>
+		中文
+	</a>
+	<a
+		href={urls.en}
+		class:list={[
+			'rounded-full px-2.5 py-1 transition',
+			lang === 'en' ? 'bg-ink text-canvas' : 'text-muted hover:text-ink',
+		]}
+		aria-current={lang === 'en' ? 'page' : undefined}
+	>
+		EN
+	</a>
+</div>

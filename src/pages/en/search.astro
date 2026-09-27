@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../i18n/ui';
+
+const lang = 'en';
+const path = 'search';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout lang={lang} path={path} title={t('search', 'title', lang)}>
+	<h1 class="mb-3 font-serif text-3xl text-ink">{t('search', 'title', lang)}</h1>
+	<p class="mb-6 max-w-2xl text-sm text-muted">{t('search', 'hint', lang)}</p>
+	{
+		import.meta.env.DEV && (
+			<p class="mb-4 rounded-lg border border-accent/20 bg-card px-4 py-3 text-sm text-muted">
+				{t('search', 'devNotice', lang)}
+			</p>
+		)
+	}
+	<link href={`${base}pagefind/pagefind-ui.css`} rel="stylesheet" />
+	<div id="pagefind-search" class="pagefind-wrap"></div>
+</BaseLayout>
+
+<script is:inline define:vars={{ base }}>
+	window.addEventListener('DOMContentLoaded', () => {
+		const script = document.createElement('script');
+		script.src = `${base}pagefind/pagefind-ui.js`;
+		script.onload = () => {
+			if (window.PagefindUI) {
+				new window.PagefindUI({
+					element: '#pagefind-search',
+					showSubResults: true,
+					baseUrl: base,
+				});
+			}
+		};
+		document.body.appendChild(script);
+	});
+</script>
+
+<style>
+	.pagefind-wrap {
+		--pagefind-ui-scale: 0.95;
+		--pagefind-ui-primary: #c45c4a;
+		--pagefind-ui-text: #2c2c2c;
+		--pagefind-ui-background: #ffffff;
+		--pagefind-ui-border: rgba(44, 44, 44, 0.12);
+	}
+</style>

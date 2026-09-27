@@ -1,0 +1,27 @@
+---
+import { cosUrl } from '../lib/cos';
+
+interface Props {
+	objectKey: string;
+	alt: string;
+	class?: string;
+	loading?: 'lazy' | 'eager';
+	width?: number;
+	height?: number;
+	sizes?: string;
+}
+
+const { objectKey, alt, class: className, loading = 'lazy', width, height, sizes } = Astro.props;
+const src = cosUrl(objectKey);
+---
+
+<img
+	src={src}
+	alt={alt}
+	class={className}
+	loading={loading}
+	width={width}
+	height={height}
+	sizes={sizes}
+	decoding="async"
+/>

@@ -1,0 +1,48 @@
+---
+import type { Lang } from '../types/lang';
+import { t } from '../i18n/ui';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	lang: Lang;
+	exif: NonNullable<CollectionEntry<'photos'>['data']['exif']>;
+	takenAt: Date;
+}
+
+const { lang, exif, takenAt } = Astro.props;
+
+const rows: { label: string; value: string | number | undefined }[] = [
+	{ label: t('photo', 'make', lang), value: exif.make && exif.model ? `${exif.make} ${exif.model}` : exif.model ?? exif.make },
+	{ label: t('photo', 'lens', lang), value: exif.lens },
+	{ label: t('photo', 'focalLength', lang), value: exif.focalLength },
+	{ label: t('photo', 'aperture', lang), value: exif.aperture },
+	{ label: t('photo', 'shutter', lang), value: exif.shutter },
+	{ label: t('photo', 'iso', lang), value: exif.iso },
+];
+
+const visible = rows.filter((r) => r.value !== undefined && r.value !== '');
+---
+
+{
+	visible.length > 0 && (
+		<details class="rounded-xl border border-ink/10 bg-card p-4 open:shadow-sm">
+			<summary class="cursor-pointer font-medium text-ink">{t('photo', 'exifTitle', lang)}</summary>
+			<dl class="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+				{visible.map((row) => (
+					<div class="flex justify-between gap-4 border-b border-ink/5 pb-2">
+						<dt class="text-muted">{row.label}</dt>
+						<dd class="text-ink">{row.value}</dd>
+					</div>
+				))}
+				<div class="flex justify-between gap-4 border-b border-ink/5 pb-2 sm:col-span-2">
+					<dt class="text-muted">{t('photo', 'takenAt', lang)}</dt>
+					<dd class="text-ink">
+						<time datetime={takenAt.toISOString()}>
+							{takenAt.toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US')}
+						</time>
+					</dd>
+				</div>
+			</dl>
+		</details>
+	)
+}

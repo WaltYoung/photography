@@ -1,0 +1,106 @@
+---
+import CosImage from '../../../components/CosImage.astro';
+import ExifPanel from '../../../components/ExifPanel.astro';
+import PhotoGallery from '../../../components/PhotoGallery.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {
+	getPhotoById,
+	getPhotosForAlbum,
+	getAlbumBySlug,
+	albumTitle,
+	photoTitle,
+} from '../../../lib/content';
+import { getCollection } from 'astro:content';
+import { t } from '../../../i18n/ui';
+import { localePath, localized } from '../../../i18n/utils';
+import { cosUrl } from '../../../lib/cos';
+
+export async function getStaticPaths() {
+	const photos = await getCollection('photos');
+	return photos.map((photo) => ({
+		params: { id: photo.data.id },
+		props: { photo },
+	}));
+}
+
+const lang = 'en';
+const { photo } = Astro.props;
+const path = `photos/${photo.data.id}`;
+const album = await getAlbumBySlug(photo.data.album);
+const albumPhotos = album ? await getPhotosForAlbum(album.data.slug) : [photo];
+const tagLabels = photo.data.tags.map((tag) => localized(tag, lang)).join(', ');
+---
+
+<BaseLayout
+	lang={lang}
+	path={path}
+	title={photoTitle(photo, lang)}
+	description={photo.data.description ? localized(photo.data.description, lang) : tagLabels}
+	ogImage={cosUrl(photo.data.imageKey)}
+	pagefindMeta={{
+		photo: localized(photo.data.title, lang),
+		tags: tagLabels,
+	}}
+>
+	<article class="mx-auto max-w-4xl space-y-6">
+		<header class="space-y-2">
+			{
+				album && (
+					<a href={localePath(lang, `albums/${album.data.slug}`)} class="text-sm text-accent">
+						{t('photo', 'inAlbum', lang)}：{albumTitle(album, lang)}
+					</a>
+				)
+			}
+			<h1 class="font-serif text-3xl text-ink">{photoTitle(photo, lang)}</h1>
+			{
+				photo.data.description && (
+					<p class="text-muted">{localized(photo.data.description, lang)}</p>
+				)
+			}
+		</header>
+
+		<div class="overflow-hidden rounded-2xl border border-ink/10 bg-card p-2 shadow-sm">
+			<CosImage
+				objectKey={photo.data.imageKey}
+				alt={localized(photo.data.alt, lang)}
+				class="mx-auto max-h-[80vh] w-full rounded-xl object-contain"
+				loading="eager"
+				width={photo.data.width}
+				height={photo.data.height}
+			/>
+		</div>
+
+		{
+			photo.data.tags.length > 0 && (
+				<div>
+					<p class="mb-2 text-sm text-muted">{t('photo', 'tags', lang)}</p>
+					<ul class="flex flex-wrap gap-2">
+						{photo.data.tags.map((tag) => (
+							<li>
+								<a
+									href={localePath(lang, `tags/${tag.slug}`)}
+									class="rounded-full bg-canvas px-3 py-1 text-sm text-ink hover:text-accent"
+								>
+									{localized(tag, lang)}
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			)
+		}
+
+		{photo.data.exif && <ExifPanel lang={lang} exif={photo.data.exif} takenAt={photo.data.takenAt} />}
+
+		{
+			album && albumPhotos.length > 1 && (
+				<section>
+					<h2 class="mb-4 font-serif text-xl">
+						{lang === 'zh' ? '相册图集' : 'Album gallery'}
+					</h2>
+					<PhotoGallery photos={albumPhotos} lang={lang} galleryId={`gallery-photo-${photo.data.id}`} />
+				</section>
+			)
+		}
+	</article>
+</BaseLayout>

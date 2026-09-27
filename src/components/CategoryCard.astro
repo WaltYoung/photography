@@ -1,0 +1,35 @@
+---
+import type { Lang } from '../types/lang';
+import type { CategoryEntry } from '../lib/content';
+import { categoryTitle } from '../lib/content';
+import { localePath, localized } from '../i18n/utils';
+import CosImage from './CosImage.astro';
+
+interface Props {
+	category: CategoryEntry;
+	lang: Lang;
+	albumCount: number;
+}
+
+const { category, lang, albumCount } = Astro.props;
+const href = localePath(lang, `categories/${category.data.slug}`);
+---
+
+<a
+	href={href}
+	class="flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-card shadow-sm transition hover:border-accent/30 md:flex-row"
+>
+	<div class="aspect-[16/10] md:aspect-auto md:w-2/5">
+		<CosImage
+			objectKey={category.data.coverKey}
+			alt={localized(category.data.title, lang)}
+			class="h-full w-full object-cover"
+			loading="lazy"
+		/>
+	</div>
+	<div class="flex flex-1 flex-col justify-center gap-2 p-5">
+		<h3 class="font-serif text-xl text-ink">{categoryTitle(category, lang)}</h3>
+		<p class="text-sm text-muted">{localized(category.data.description, lang)}</p>
+		<p class="text-xs text-muted">{albumCount} {lang === 'zh' ? '本相册' : 'albums'}</p>
+	</div>
+</a>

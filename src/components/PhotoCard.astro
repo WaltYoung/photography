@@ -1,0 +1,42 @@
+---
+import type { Lang } from '../types/lang';
+import type { PhotoEntry } from '../lib/content';
+import { photoTitle } from '../lib/content';
+import { localePath, localized } from '../i18n/utils';
+import CosImage from './CosImage.astro';
+
+interface Props {
+	photo: PhotoEntry;
+	lang: Lang;
+	compact?: boolean;
+}
+
+const { photo, lang, compact = false } = Astro.props;
+const href = localePath(lang, `photos/${photo.data.id}`);
+---
+
+<a
+	href={href}
+	class:list={[
+		'block overflow-hidden rounded-xl border border-ink/10 bg-card shadow-sm transition hover:shadow-md',
+		compact ? '' : 'group',
+	]}
+>
+	<div class:list={['overflow-hidden bg-canvas', compact ? 'aspect-square' : 'aspect-[4/5]']}>
+		<CosImage
+			objectKey={photo.data.thumbKey}
+			alt={localized(photo.data.alt, lang)}
+			class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+			width={photo.data.width}
+			height={photo.data.height}
+			loading="lazy"
+		/>
+	</div>
+	{
+		!compact && (
+			<div class="p-3">
+				<p class="font-medium text-ink">{photoTitle(photo, lang)}</p>
+			</div>
+		)
+	}
+</a>

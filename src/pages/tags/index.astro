@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags } from '../../lib/content';
+import { t } from '../../i18n/ui';
+import { localePath, localized } from '../../i18n/utils';
+
+const lang = 'zh';
+const path = 'tags';
+const tags = await getAllTags();
+---
+
+<BaseLayout lang={lang} path={path} title={t('nav', 'tags', lang)}>
+	<h1 class="mb-8 font-serif text-3xl text-ink">{t('nav', 'tags', lang)}</h1>
+	<ul class="flex flex-wrap gap-3">
+		{tags.map((tag) => (
+			<li>
+				<a
+					href={localePath(lang, `tags/${tag.slug}`)}
+					class="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-card px-4 py-2 text-sm shadow-sm transition hover:border-accent/40"
+				>
+					<span>{localized(tag, lang)}</span>
+					<span class="text-muted">{tag.count}</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import AlbumCard from '../../components/AlbumCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+	getAlbumsByCategory,
+	getCategoriesSorted,
+	getCategoryBySlug,
+	categoryTitle,
+} from '../../lib/content';
+import { localized } from '../../i18n/utils';
+import { cosUrl } from '../../lib/cos';
+
+export async function getStaticPaths() {
+	const categories = await getCategoriesSorted();
+	return categories.map((category) => ({
+		params: { slug: category.data.slug },
+		props: { category },
+	}));
+}
+
+const lang = 'zh';
+const { category } = Astro.props;
+const path = `categories/${category.data.slug}`;
+const albums = await getAlbumsByCategory(category.data.slug);
+---
+
+<BaseLayout
+	lang={lang}
+	path={path}
+	title={categoryTitle(category, lang)}
+	description={localized(category.data.description, lang)}
+	ogImage={cosUrl(category.data.coverKey)}
+	pagefindMeta={{ category: localized(category.data.title, lang) }}
+>
+	<header class="mb-8 space-y-3">
+		<h1 class="font-serif text-3xl text-ink">{categoryTitle(category, lang)}</h1>
+		<p class="max-w-2xl text-muted">{localized(category.data.description, lang)}</p>
+	</header>
+	<div class="grid gap-6 sm:grid-cols-2">
+		{albums.map((album) => (
+			<AlbumCard album={album} lang={lang} />
+		))}
+	</div>
+</BaseLayout>

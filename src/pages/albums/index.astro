@@ -1,0 +1,19 @@
+---
+import AlbumCard from '../../components/AlbumCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAlbumsSorted } from '../../lib/content';
+import { t } from '../../i18n/ui';
+
+const lang = 'zh';
+const path = 'albums';
+const albums = await getAlbumsSorted();
+---
+
+<BaseLayout lang={lang} path={path} title={t('nav', 'albums', lang)}>
+	<h1 class="mb-8 font-serif text-3xl text-ink">{t('nav', 'albums', lang)}</h1>
+	<div class="grid gap-6 sm:grid-cols-2">
+		{albums.map((album) => (
+			<AlbumCard album={album} lang={lang} />
+		))}
+	</div>
+</BaseLayout>

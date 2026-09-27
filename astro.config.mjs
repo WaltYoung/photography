@@ -1,8 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 
-// https://docs.astro.build/en/guides/deploy/github/
-// 仓库 WaltYoung/photography → GitHub Pages 项目站子路径
 const REPO = 'photography';
 
 // https://astro.build/config
@@ -11,4 +10,14 @@ export default defineConfig({
 	base: `/${REPO}/`,
 	output: 'static',
 	trailingSlash: 'always',
+	i18n: {
+		defaultLocale: 'zh',
+		locales: ['zh', 'en'],
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
+	vite: {
+		plugins: [tailwindcss()],
+	},
 });

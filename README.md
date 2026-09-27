@@ -1,43 +1,46 @@
-# Astro Starter Kit: Minimal
+# WaltYoung Photography
 
-```sh
-npm create astro@latest -- --template minimal
+摄影师个人作品站（Astro 7 + 腾讯云 COS + GitHub Pages）。
+
+- 线上：https://waltyoung.github.io/photography/
+- 仓库：https://github.com/WaltYoung/photography
+
+## 开发
+
+```bash
+cp .env.example .env
+npm install
+astro dev --background
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+本地地址含 `base` 路径：`http://localhost:4321/photography/`。
 
-## 🚀 Project Structure
+## 构建与搜索
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run build   # astro build + Pagefind 索引
+npm run preview
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+搜索（Pagefind）仅在 `build` 之后可用，开发模式请用 preview。
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 内容维护
 
-Any static assets, like images, can be placed in the `public/` directory.
+| 目录 | 说明 |
+|------|------|
+| `src/content/categories/` | 分类 |
+| `src/content/albums/` | 相册 |
+| `src/content/photos/` | 单张照片（含 EXIF、标签） |
+| `src/content/bio/` | 简介 |
 
-## 🧞 Commands
+图片上传到 COS 后，在 frontmatter 填写 `imageKey` / `thumbKey`（相对 Key，不含域名）。
 
-All commands are run from the root of the project, from a terminal:
+从本地文件提取 EXIF 片段：
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```bash
+node scripts/sync-exif.mjs ./path/to/photo.jpg
+```
 
-## 👀 Want to learn more?
+## 部署
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+推送到 `main` 分支触发 [GitHub Actions](.github/workflows/deploy.yml)。Pages 源需设为 **GitHub Actions**。

@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-canvas: #f7f5f2;
+	--color-ink: #2c2c2c;
+	--color-muted: #6b6560;
+	--color-accent: #c45c4a;
+	--color-card: #ffffff;
+	--font-serif: 'Georgia', 'Noto Serif SC', ui-serif, serif;
+	--font-sans: system-ui, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-canvas text-ink antialiased;
+	font-family: var(--font-sans);
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+.prose-serif h1,
+.prose-serif h2,
+.prose-serif h3 {
+	font-family: var(--font-serif);
+}

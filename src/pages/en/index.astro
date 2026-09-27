@@ -1,21 +1,21 @@
 ---
-import AlbumCard from '../components/AlbumCard.astro';
-import CategoryCard from '../components/CategoryCard.astro';
-import CosImage from '../components/CosImage.astro';
-import PhotoCard from '../components/PhotoCard.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import AlbumCard from '../../components/AlbumCard.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+import CosImage from '../../components/CosImage.astro';
+import PhotoCard from '../../components/PhotoCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
 	getAlbumsByCategory,
 	getCategoriesSorted,
 	getFeaturedAlbums,
 	getFeaturedPhotos,
-} from '../lib/content';
+} from '../../lib/content';
 import { getCollection } from 'astro:content';
-import { t } from '../i18n/ui';
-import { localePath, localized } from '../i18n/utils';
-import { cosUrl } from '../lib/cos';
+import { t } from '../../i18n/ui';
+import { localePath, localized } from '../../i18n/utils';
+import { cosUrl } from '../../lib/cos';
 
-const lang = 'zh';
+const lang = 'en';
 const path = '';
 
 const [categories, featuredAlbums, featuredPhotos, bioEntries] = await Promise.all([

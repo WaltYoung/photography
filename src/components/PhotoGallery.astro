@@ -1,0 +1,50 @@
+---
+import type { Lang } from '../types/lang';
+import type { PhotoEntry } from '../lib/content';
+import { photoTitle } from '../lib/content';
+import { cosUrl } from '../lib/cos';
+import { localized } from '../i18n/utils';
+
+interface Props {
+	photos: PhotoEntry[];
+	lang: Lang;
+	galleryId: string;
+}
+
+const { photos, lang, galleryId } = Astro.props;
+---
+
+<div class="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4" id={galleryId}>
+	{
+		photos.map((photo) => (
+			<a
+				href={cosUrl(photo.data.imageKey)}
+				class="group overflow-hidden rounded-xl border border-ink/10 bg-card shadow-sm"
+				data-pswp-width={photo.data.width}
+				data-pswp-height={photo.data.height}
+			>
+				<img
+					src={cosUrl(photo.data.thumbKey)}
+					alt={localized(photo.data.alt, lang)}
+					class="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+					loading="lazy"
+					width={photo.data.width}
+					height={photo.data.height}
+				/>
+				<p class="px-2 py-2 text-sm text-ink">{photoTitle(photo, lang)}</p>
+			</a>
+		))
+	}
+</div>
+
+<script define:vars={{ galleryId }}>
+	import PhotoSwipeLightbox from 'photoswipe/lightbox';
+	import 'photoswipe/style.css';
+
+	const lightbox = new PhotoSwipeLightbox({
+		gallery: `#${galleryId}`,
+		children: 'a',
+		pswpModule: () => import('photoswipe'),
+	});
+	lightbox.init();
+</script>

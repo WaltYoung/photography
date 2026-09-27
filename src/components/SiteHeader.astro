@@ -1,0 +1,61 @@
+---
+import type { Lang } from '../types/lang';
+import { t } from '../i18n/ui';
+import { localePath } from '../i18n/utils';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+	lang: Lang;
+	path: string;
+}
+
+const { lang, path } = Astro.props;
+
+const links = [
+	{ href: localePath(lang, ''), label: t('nav', 'home', lang) },
+	{ href: localePath(lang, 'categories'), label: t('nav', 'categories', lang) },
+	{ href: localePath(lang, 'albums'), label: t('nav', 'albums', lang) },
+	{ href: localePath(lang, 'tags'), label: t('nav', 'tags', lang) },
+	{ href: localePath(lang, 'about'), label: t('nav', 'about', lang) },
+	{ href: localePath(lang, 'search'), label: t('nav', 'search', lang) },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-ink/10 bg-canvas/90 backdrop-blur-md">
+	<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
+		<a href={localePath(lang, '')} class="font-serif text-lg tracking-tight text-ink md:text-xl">
+			WaltYoung
+		</a>
+		<nav class="hidden items-center gap-6 text-sm text-muted md:flex" aria-label="Main">
+			{
+				links.map((link) => (
+					<a href={link.href} class="transition hover:text-accent">
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+		<div class="flex items-center gap-3">
+			<LangSwitch lang={lang} path={path} />
+			<details class="relative md:hidden">
+				<summary class="list-none cursor-pointer rounded-lg border border-ink/10 px-3 py-1.5 text-sm">
+					Menu
+				</summary>
+				<div
+					class="absolute right-0 mt-2 w-48 rounded-xl border border-ink/10 bg-card p-2 shadow-lg"
+				>
+					{
+						links.map((link) => (
+							<a
+								href={link.href}
+								class="block rounded-lg px-3 py-2 text-sm text-ink hover:bg-canvas"
+							>
+								{link.label}
+							</a>
+						))
+					}
+				</div>
+			</details>
+		</div>
+	</div>
+</header>

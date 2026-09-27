@@ -1,0 +1,51 @@
+---
+import CosImage from '../components/CosImage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { localized } from '../i18n/utils';
+
+const lang = 'zh';
+const path = 'about';
+
+const bioEntries = await getCollection('bio');
+const bio = bioEntries[0];
+if (!bio) {
+	return Astro.redirect(`${import.meta.env.BASE_URL}`);
+}
+const { Content } = await render(bio);
+---
+
+<BaseLayout
+	lang={lang}
+	path={path}
+	title={localized(bio.data.name, lang)}
+	description={localized(bio.data.tagline, lang)}
+>
+	<div class="grid gap-8 md:grid-cols-[240px_1fr]">
+		<CosImage
+			objectKey={bio.data.avatarKey}
+			alt={localized(bio.data.name, lang)}
+			class="aspect-square w-full max-w-xs rounded-2xl border border-ink/10 object-cover shadow-sm"
+		/>
+		<div class="prose-serif space-y-4">
+			<h1 class="font-serif text-4xl text-ink">{localized(bio.data.name, lang)}</h1>
+			<p class="text-lg text-muted">{localized(bio.data.tagline, lang)}</p>
+			<div class="prose max-w-none text-ink/90">
+				<Content />
+			</div>
+			{
+				bio.data.social && (
+					<ul class="flex flex-wrap gap-3 pt-2">
+						{bio.data.social.map((s) => (
+							<li>
+								<a href={s.url} class="text-accent hover:underline" rel="noopener noreferrer">
+									{s.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</div>
+	</div>
+</BaseLayout>

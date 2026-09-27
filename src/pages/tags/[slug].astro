@@ -1,0 +1,34 @@
+---
+import PhotoCard from '../../components/PhotoCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags, getPhotosByTag } from '../../lib/content';
+import { localized } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+	const tags = await getAllTags();
+	return tags.map((tag) => ({
+		params: { slug: tag.slug },
+		props: { tag },
+	}));
+}
+
+const lang = 'zh';
+const { tag } = Astro.props;
+const path = `tags/${tag.slug}`;
+const photos = await getPhotosByTag(tag.slug);
+---
+
+<BaseLayout
+	lang={lang}
+	path={path}
+	title={localized(tag, lang)}
+	pagefindMeta={{ tag: localized(tag, lang) }}
+>
+	<h1 class="mb-2 font-serif text-3xl text-ink">{localized(tag, lang)}</h1>
+	<p class="mb-8 text-sm text-muted">{photos.length} {lang === 'zh' ? '张照片' : 'photos'}</p>
+	<div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+		{photos.map((photo) => (
+			<PhotoCard photo={photo} lang={lang} />
+		))}
+	</div>
+</BaseLayout>

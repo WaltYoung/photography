@@ -1,0 +1,37 @@
+---
+import type { Lang } from '../types/lang';
+import type { AlbumEntry } from '../lib/content';
+import { albumTitle } from '../lib/content';
+import { t } from '../i18n/ui';
+import { formatDate, localePath, localized } from '../i18n/utils';
+import CosImage from './CosImage.astro';
+
+interface Props {
+	album: AlbumEntry;
+	lang: Lang;
+}
+
+const { album, lang } = Astro.props;
+const href = localePath(lang, `albums/${album.data.slug}`);
+---
+
+<article class="group overflow-hidden rounded-2xl border border-ink/10 bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+	<a href={href} class="block">
+		<div class="aspect-[4/3] overflow-hidden bg-canvas">
+			<CosImage
+				objectKey={album.data.coverKey}
+				alt={localized(album.data.title, lang)}
+				class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+				loading="lazy"
+			/>
+		</div>
+		<div class="space-y-2 p-4">
+			<time class="text-xs uppercase tracking-wide text-muted" datetime={album.data.publishedAt.toISOString()}>
+				{formatDate(album.data.publishedAt, lang)}
+			</time>
+			<h3 class="font-serif text-lg leading-snug text-ink">{albumTitle(album, lang)}</h3>
+			<p class="line-clamp-2 text-sm text-muted">{localized(album.data.summary, lang)}</p>
+			<span class="inline-block text-sm font-medium text-accent">{t('actions', 'viewAlbum', lang)} →</span>
+		</div>
+	</a>
+</article>

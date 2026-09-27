@@ -159,10 +159,10 @@ exif:
 ### 构建脚本
 
 ```json
-"build": "astro build && pagefind --site dist --base-url \"/photography/\""
+"build": "astro build && node ./node_modules/pagefind/lib/runner/bin.cjs --site dist"
 ```
 
-`base-url` 须与 `astro.config.mjs` 的 `base` 一致。
+搜索页 `PagefindUI` 的 `baseUrl` 使用 `import.meta.env.BASE_URL`（与 `astro.config.mjs` 的 `base` 一致）。
 
 ### UI
 

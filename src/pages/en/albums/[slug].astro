@@ -1,0 +1,60 @@
+---
+import PhotoGallery from '../../../components/PhotoGallery.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {
+	getAlbumBySlug,
+	getAlbumsSorted,
+	getCategoryBySlug,
+	getPhotosForAlbum,
+	albumTitle,
+	categoryTitle,
+} from '../../../lib/content';
+import { formatDate, localePath, localized } from '../../../i18n/utils';
+import { cosUrl } from '../../../lib/cos';
+
+export async function getStaticPaths() {
+	const albums = await getAlbumsSorted();
+	return albums.map((album) => ({
+		params: { slug: album.data.slug },
+		props: { album },
+	}));
+}
+
+const lang = 'en';
+const { album } = Astro.props;
+const path = `albums/${album.data.slug}`;
+const photos = await getPhotosForAlbum(album.data.slug);
+const category = await getCategoryBySlug(album.data.category);
+const galleryId = `gallery-${album.data.slug}`;
+---
+
+<BaseLayout
+	lang={lang}
+	path={path}
+	title={albumTitle(album, lang)}
+	description={localized(album.data.summary, lang)}
+	ogImage={cosUrl(album.data.coverKey)}
+	pagefindMeta={{
+		album: localized(album.data.title, lang),
+		category: category ? localized(category.data.title, lang) : '',
+	}}
+>
+	<header class="mb-8 space-y-3 border-b border-ink/10 pb-6">
+		{
+			category && (
+				<a
+					href={localePath(lang, `categories/${category.data.slug}`)}
+					class="inline-block rounded-full bg-canvas px-3 py-1 text-xs text-accent"
+				>
+					{categoryTitle(category, lang)}
+				</a>
+			)
+		}
+		<h1 class="font-serif text-3xl text-ink">{albumTitle(album, lang)}</h1>
+		<time class="text-sm text-muted" datetime={album.data.publishedAt.toISOString()}>
+			{formatDate(album.data.publishedAt, lang)}
+		</time>
+		<p class="max-w-2xl text-muted">{localized(album.data.summary, lang)}</p>
+	</header>
+	<PhotoGallery photos={photos} lang={lang} galleryId={galleryId} />
+</BaseLayout>
