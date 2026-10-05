@@ -13,7 +13,6 @@
     "sync-exif": "node scripts/batch-sync-exif-from-r2.mjs"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^6.0.2",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
     "photoswipe": "^5.4.4",

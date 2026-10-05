@@ -7,11 +7,16 @@
 
 ## 开发
 
+需要 **Node ≥ 22.12**（推荐与 CI 一致：`nvm use` 读取 `.nvmrc` → 22.23.3）。
+
 ```bash
 cp .env.example .env
-npm install
+nvm use
+npm ci          # 与 GitHub Actions 相同；勿仅用 npm install 后忘记提交 lockfile
 astro dev --background
 ```
+
+线上部署由 **GitHub Actions** 执行 `npm ci` + `npm run build`。若 Actions 失败，Pages 会停留在上一次成功构建（常见原因：`package-lock.json` 与 `package.json` 不同步）。
 
 本地地址含 `base` 路径：`http://localhost:4321/photography/`。
 
