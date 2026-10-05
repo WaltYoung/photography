@@ -9,7 +9,7 @@ title:
 summary:
   zh: "芙宁娜 · 2026.07.18 武汉梦乡漫展"
   en: "芙宁娜 · 2026.07.18 武汉梦乡漫展"
-coverKey: "photo/acg/2026.07.18 武汉梦乡漫展/芙宁娜/_MG_1017.jpg"
+coverKey: "photo/acg/2026.07.18 武汉梦乡漫展/芙宁娜/_MG_1036.jpg"
 photoOrder:
   - p-b6f7bdcf57
   - p-b1afe2385d

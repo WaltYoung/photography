@@ -9,7 +9,7 @@ title:
 summary:
   zh: "阿格莱雅 · 2026.07.25 武汉CGF漫展"
   en: "阿格莱雅 · 2026.07.25 武汉CGF漫展"
-coverKey: "photo/acg/2026.07.25 武汉CGF漫展/阿格莱雅/_MG_1240.png"
+coverKey: "photo/acg/2026.07.25 武汉CGF漫展/阿格莱雅/_MG_1256.png"
 photoOrder:
   - p-2a67027f2e
   - p-459da8e50f
