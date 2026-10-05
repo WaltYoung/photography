@@ -98,7 +98,7 @@ const ALBUMS = [
 	{
 		event: '2026.07.18 武汉梦乡漫展',
 		character: '西施「游龙清影」 -甜吱',
-		files: ['_MG_1007.jpg'],
+		files: ['_MG_1007.jpg', '_MG_1012.jpg'],
 	},
 	{
 		event: '2026.07.18 武汉梦乡漫展',
