@@ -14,19 +14,19 @@ interface Props {
 const { photos, lang, galleryId } = Astro.props;
 ---
 
-<div class="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4" id={galleryId}>
+<div class="masonry" id={galleryId}>
 	{
 		photos.map((photo) => (
 			<a
 				href={cosUrl(photo.data.imageKey)}
-				class="group overflow-hidden rounded-xl border border-ink/10 bg-card shadow-sm"
+				class="masonry-item group block overflow-hidden rounded-xl border border-ink/10 bg-card shadow-sm"
 				data-pswp-width={photo.data.width}
 				data-pswp-height={photo.data.height}
 			>
 				<img
 					src={cosUrl(photo.data.thumbKey)}
 					alt={localized(photo.data.alt, lang)}
-					class="aspect-[4/5] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+					class="block h-auto w-full transition duration-500 group-hover:scale-[1.01]"
 					loading="lazy"
 					width={photo.data.width}
 					height={photo.data.height}

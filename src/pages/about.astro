@@ -21,7 +21,7 @@ const { Content } = await render(bio);
 	title={localized(bio.data.name, lang)}
 	description={localized(bio.data.tagline, lang)}
 >
-	<div class="grid gap-8 md:grid-cols-[240px_1fr]">
+	<div class="about-page grid gap-8 md:grid-cols-[240px_1fr]">
 		<img
 			src={AVATAR_SRC}
 			alt={localized(bio.data.name, lang)}
@@ -31,15 +31,15 @@ const { Content } = await render(bio);
 			loading="eager"
 			decoding="async"
 		/>
-		<div class="prose-serif space-y-4">
-			<h1 class="font-serif text-4xl text-ink">{localized(bio.data.name, lang)}</h1>
-			<p class="text-lg text-muted">{localized(bio.data.tagline, lang)}</p>
-			<div class="prose max-w-none text-ink/90">
+		<div class="space-y-4">
+			<h1>{localized(bio.data.name, lang)}</h1>
+			<p class="about-tagline">{localized(bio.data.tagline, lang)}</p>
+			<div class="about-prose">
 				<Content />
 			</div>
 			{
 				bio.data.social && (
-					<ul class="flex flex-wrap gap-3 pt-2">
+					<ul class="flex flex-wrap gap-3 pt-2 text-sm">
 						{bio.data.social.map((s) => (
 							<li>
 								<a href={s.url} class="text-accent hover:underline" rel="noopener noreferrer">

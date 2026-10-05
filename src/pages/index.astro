@@ -7,6 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import {
 	getAlbumsByCategory,
 	getCategoriesSorted,
+	getAlbumCoverSize,
 	getFeaturedAlbums,
 	getFeaturedPhotos,
 } from '../lib/content';
@@ -34,6 +35,12 @@ const categoryCounts = await Promise.all(
 );
 
 const heroPhoto = featuredPhotos[0];
+const featuredWithCover = await Promise.all(
+	featuredAlbums.map(async (album) => ({
+		album,
+		cover: await getAlbumCoverSize(album),
+	})),
+);
 ---
 
 <BaseLayout lang={lang} path={path} ogImage={heroPhoto ? cosUrl(heroPhoto.data.imageKey) : undefined}>
@@ -91,10 +98,17 @@ const heroPhoto = featuredPhotos[0];
 			<h2 class="font-serif text-2xl text-ink">{t('home', 'latestAlbums', lang)}</h2>
 			<a href={localePath(lang, 'albums')} class="text-sm text-accent">{t('actions', 'allAlbums', lang)}</a>
 		</div>
-		<div class="grid gap-6 sm:grid-cols-2">
-			{featuredAlbums.map((album) => (
-				<AlbumCard album={album} lang={lang} />
-			))}
+		<div class="masonry">
+			{
+				featuredWithCover.map(({ album, cover }) => (
+					<AlbumCard
+						album={album}
+						lang={lang}
+						coverWidth={cover?.width}
+						coverHeight={cover?.height}
+					/>
+				))
+			}
 		</div>
 	</section>
 

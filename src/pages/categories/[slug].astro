@@ -2,6 +2,7 @@
 import AlbumCard from '../../components/AlbumCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
+	getAlbumCoverSize,
 	getAlbumsByCategory,
 	getCategoriesSorted,
 	getCategoryBySlug,
@@ -22,6 +23,12 @@ const lang = 'zh';
 const { category } = Astro.props;
 const path = `categories/${category.data.slug}`;
 const albums = await getAlbumsByCategory(category.data.slug);
+const albumsWithCover = await Promise.all(
+	albums.map(async (album) => ({
+		album,
+		cover: await getAlbumCoverSize(album),
+	})),
+);
 ---
 
 <BaseLayout
@@ -36,9 +43,16 @@ const albums = await getAlbumsByCategory(category.data.slug);
 		<h1 class="font-serif text-3xl text-ink">{categoryTitle(category, lang)}</h1>
 		<p class="max-w-2xl text-muted">{localized(category.data.description, lang)}</p>
 	</header>
-	<div class="grid gap-6 sm:grid-cols-2">
-		{albums.map((album) => (
-			<AlbumCard album={album} lang={lang} />
-		))}
+	<div class="masonry">
+		{
+			albumsWithCover.map(({ album, cover }) => (
+				<AlbumCard
+					album={album}
+					lang={lang}
+					coverWidth={cover?.width}
+					coverHeight={cover?.height}
+				/>
+			))
+		}
 	</div>
 </BaseLayout>

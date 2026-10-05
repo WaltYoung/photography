@@ -111,3 +111,18 @@ export function albumTitle(album: AlbumEntry, lang: Lang): string {
 export function categoryTitle(category: CategoryEntry, lang: Lang): string {
 	return localized(category.data.title, lang);
 }
+
+/** 相册封面宽高（匹配 coverKey，否则取相册首图） */
+export async function getAlbumCoverSize(
+	album: AlbumEntry,
+): Promise<{ width: number; height: number } | null> {
+	const photos = await getCollection('photos');
+	const inAlbum = photos.filter((p) => p.data.album === album.data.slug);
+	const match = inAlbum.find(
+		(p) =>
+			p.data.imageKey === album.data.coverKey || p.data.thumbKey === album.data.coverKey,
+	);
+	const source = match ?? inAlbum[0];
+	if (!source) return null;
+	return { width: source.data.width, height: source.data.height };
+}
