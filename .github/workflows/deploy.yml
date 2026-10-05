@@ -33,8 +33,7 @@ jobs:
       - name: Build site
         run: npm run build
         env:
-          # 公有读域名，与 .env.example 一致；后续可改为仓库 Variable PUBLIC_COS_BASE_URL
-          PUBLIC_COS_BASE_URL: https://waltyoung-music-1317864421.cos.ap-shanghai.myqcloud.com
+          PUBLIC_MEDIA_BASE_URL: https://20011129.xyz
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

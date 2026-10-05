@@ -33,7 +33,13 @@ npm run preview
 | `src/content/photos/` | 单张照片（含 EXIF、标签） |
 | `src/content/bio/` | 简介 |
 
-图片上传到 COS 后，在 frontmatter 填写 `imageKey` / `thumbKey`（相对 Key，不含域名）。
+图片托管在 Cloudflare R2（自定义域名 `20011129.xyz`），在 frontmatter 填写 `imageKey` / `thumbKey`（桶内路径，如 `photo/acg/...`）。
+
+批量导入 ACG 目录：
+
+```bash
+node scripts/generate-acg-content.mjs
+```
 
 从本地文件提取 EXIF 片段：
 
