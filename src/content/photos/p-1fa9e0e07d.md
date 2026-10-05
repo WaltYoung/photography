@@ -23,4 +23,9 @@ height: 6000
 alt:
   zh: "刻晴 场照"
   en: "刻晴 convention photo"
+exif:
+  focalLength: "34mm"
+  aperture: "f/2.8"
+  shutter: "1/60s"
+  iso: 100
 ---

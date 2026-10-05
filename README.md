@@ -41,7 +41,13 @@ npm run preview
 node scripts/generate-acg-content.mjs
 ```
 
-从本地文件提取 EXIF 片段：
+从 R2 批量写回 EXIF（推荐）：
+
+```bash
+PUBLIC_MEDIA_BASE_URL=https://20011129.xyz npm run sync-exif
+```
+
+单张本地文件：
 
 ```bash
 node scripts/sync-exif.mjs ./path/to/photo.jpg

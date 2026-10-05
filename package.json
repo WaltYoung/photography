@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build && node ./node_modules/pagefind/lib/runner/bin.cjs --site dist",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync-exif": "node scripts/batch-sync-exif-from-r2.mjs"
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",

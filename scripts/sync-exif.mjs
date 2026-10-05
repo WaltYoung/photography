@@ -4,7 +4,8 @@
  * 用法: node scripts/sync-exif.mjs ./path/to/image.jpg
  */
 import { readFile } from 'node:fs/promises';
-import { parse } from 'exifr';
+import exifr from 'exifr';
+const { parse } = exifr;
 
 const file = process.argv[2];
 if (!file) {
