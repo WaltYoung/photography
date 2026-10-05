@@ -46,6 +46,10 @@ const ui = {
 	},
 	footer: {
 		copyright: { zh: '保留所有权利。', en: 'All rights reserved.' },
+		stack: {
+			zh: 'Astro · Cloudflare R2 · GitHub Pages',
+			en: 'Astro · Cloudflare R2 · GitHub Pages',
+		},
 	},
 	notFound: {
 		title: { zh: '页面未找到', en: 'Page not found' },

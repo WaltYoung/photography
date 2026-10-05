@@ -57,11 +57,6 @@ const featuredWithCover = await Promise.all(
 					</>
 				)
 			}
-			<p class="max-w-prose text-muted">
-				{lang === 'zh'
-					? '婚礼纪实、二次元场照与人像创作。作品存储于腾讯云 COS，站点由 Astro 构建。'
-					: 'Wedding, anime-inspired, and portrait work.'}
-			</p>
 			<a
 				href={localePath(lang, 'albums')}
 				class="inline-flex rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-canvas transition hover:bg-accent"
