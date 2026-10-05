@@ -69,8 +69,9 @@ const photos = defineCollection({
 const bio = defineCollection({
 	loader: glob({ base: './src/content/bio', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
-		name: localizedString,
-		tagline: localizedString,
+		locale: z.enum(['zh', 'en']),
+		name: z.string(),
+		tagline: z.string(),
 		social: z
 			.array(
 				z.object({

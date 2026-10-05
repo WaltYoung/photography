@@ -36,8 +36,8 @@ const ui = {
 	search: {
 		title: { zh: '站内搜索', en: 'Search' },
 		hint: {
-			zh: '搜索相册、照片标题与标签。需先构建站点后索引才可用。',
-			en: 'Search albums, titles, and tags. Index is available after a production build.',
+			zh: '搜索相册、照片标题与标签。',
+			en: 'Search albums, titles, and tags.',
 		},
 		devNotice: {
 			zh: '开发模式下 Pagefind 索引未生成，请运行 npm run build && npm run preview 体验搜索。',

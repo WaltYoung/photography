@@ -8,7 +8,7 @@ import {
 	getPhotosForAlbum,
 	getAlbumBySlug,
 	albumTitle,
-	photoTitle,
+	photoDisplayTitle,
 } from '../../lib/content';
 import { getCollection } from 'astro:content';
 import { t } from '../../i18n/ui';
@@ -34,7 +34,7 @@ const tagLabels = photo.data.tags.map((tag) => localized(tag, lang)).join(', ');
 <BaseLayout
 	lang={lang}
 	path={path}
-	title={photoTitle(photo, lang)}
+	title={photoDisplayTitle(photo, lang)}
 	description={photo.data.description ? localized(photo.data.description, lang) : tagLabels}
 	ogImage={cosUrl(photo.data.imageKey)}
 	pagefindMeta={{
@@ -51,7 +51,7 @@ const tagLabels = photo.data.tags.map((tag) => localized(tag, lang)).join(', ');
 					</a>
 				)
 			}
-			<h1 class="font-serif text-3xl text-ink">{photoTitle(photo, lang)}</h1>
+			<h1 class="font-serif text-3xl text-ink">{photoDisplayTitle(photo, lang)}</h1>
 			{
 				photo.data.description && (
 					<p class="text-muted">{localized(photo.data.description, lang)}</p>

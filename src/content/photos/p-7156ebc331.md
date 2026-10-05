@@ -10,7 +10,7 @@ tags:
     en: "Cosplay"
   - slug: convention
     zh: "场照"
-    en: "Convention"
+    en: "On-site"
   - slug: studio
     zh: "棚拍"
     en: "Studio"

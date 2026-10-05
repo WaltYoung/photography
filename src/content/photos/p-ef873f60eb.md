@@ -10,7 +10,7 @@ tags:
     en: "Cosplay"
   - slug: convention
     zh: "场照"
-    en: "Convention"
+    en: "On-site"
 takenAt: 2026-05-23T05:02:12.000Z
 featured: false
 title:

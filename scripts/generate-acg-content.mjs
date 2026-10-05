@@ -15,7 +15,7 @@ const ALBUMS_DIR = path.join(ROOT, 'src/content/albums');
 const STANDARD_TAGS = [
 	{ slug: 'portrait', zh: '人像', en: 'Portrait' },
 	{ slug: 'cosplay', zh: 'Cosplay', en: 'Cosplay' },
-	{ slug: 'convention', zh: '场照', en: 'Convention' },
+	{ slug: 'convention', zh: '场照', en: 'On-site' },
 ];
 
 /** event / character / filenames */

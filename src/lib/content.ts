@@ -5,6 +5,12 @@ import { localized } from '../i18n/utils';
 export type PhotoEntry = CollectionEntry<'photos'>;
 export type AlbumEntry = CollectionEntry<'albums'>;
 export type CategoryEntry = CollectionEntry<'categories'>;
+export type BioEntry = CollectionEntry<'bio'>;
+
+export async function getBio(lang: Lang): Promise<BioEntry | undefined> {
+	const entries = await getCollection('bio');
+	return entries.find((b) => b.data.locale === lang);
+}
 
 export async function getCategoriesSorted(): Promise<CategoryEntry[]> {
 	const items = await getCollection('categories');
@@ -102,6 +108,23 @@ export async function getPhotosByTag(tagSlug: string): Promise<PhotoEntry[]> {
 
 export function photoTitle(photo: PhotoEntry, lang: Lang): string {
 	return localized(photo.data.title, lang);
+}
+
+/** 展示用标题：角色 — 文件编号，去掉「 - 已去除背景」等后缀 */
+export function photoDisplayTitle(photo: PhotoEntry, lang: Lang): string {
+	const filename = photo.data.imageKey.split('/').pop() ?? '';
+	let stem = filename.replace(/\.(jpe?g|png|gif|webp)$/i, '');
+	const idMatch = stem.match(/(_MG_\d+|IMG_\d+)/i);
+	if (idMatch) {
+		stem = idMatch[1]!.toUpperCase();
+	} else {
+		const dashIdx = stem.indexOf(' - ');
+		if (dashIdx >= 0) stem = stem.slice(0, dashIdx).trim();
+	}
+	const full = localized(photo.data.title, lang);
+	const sep = full.includes(' — ') ? ' — ' : ' - ';
+	const character = full.split(sep)[0]?.trim() ?? full;
+	return `${character} — ${stem}`;
 }
 
 export function albumTitle(album: AlbumEntry, lang: Lang): string {
