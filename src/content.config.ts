@@ -71,7 +71,6 @@ const bio = defineCollection({
 	schema: z.object({
 		name: localizedString,
 		tagline: localizedString,
-		avatarKey: z.string(),
 		social: z
 			.array(
 				z.object({

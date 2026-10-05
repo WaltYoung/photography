@@ -58,6 +58,12 @@ PUBLIC_MEDIA_BASE_URL=https://20011129.xyz npm run sync-exif
 node scripts/sync-exif.mjs ./path/to/photo.jpg
 ```
 
+头像与 favicon（生成到 `public/`，随站点静态发布）：
+
+```bash
+npm run sync-branding
+```
+
 ## 部署
 
 推送到 `main` 分支触发 [GitHub Actions](.github/workflows/deploy.yml)。Pages 源需设为 **GitHub Actions**。

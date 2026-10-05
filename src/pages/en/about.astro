@@ -1,6 +1,6 @@
 ---
-import CosImage from '../../components/CosImage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AVATAR_SRC } from '../../lib/branding';
 import { getCollection, render } from 'astro:content';
 import { localized } from '../../i18n/utils';
 
@@ -22,10 +22,14 @@ const { Content } = await render(bio);
 	description={localized(bio.data.tagline, lang)}
 >
 	<div class="grid gap-8 md:grid-cols-[240px_1fr]">
-		<CosImage
-			objectKey={bio.data.avatarKey}
+		<img
+			src={AVATAR_SRC}
 			alt={localized(bio.data.name, lang)}
+			width={512}
+			height={512}
 			class="aspect-square w-full max-w-xs rounded-2xl border border-ink/10 object-cover shadow-sm"
+			loading="eager"
+			decoding="async"
 		/>
 		<div class="prose-serif space-y-4">
 			<h1 class="font-serif text-4xl text-ink">{localized(bio.data.name, lang)}</h1>

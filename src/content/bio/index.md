@@ -3,9 +3,8 @@ name:
   zh: WaltYoung
   en: WaltYoung
 tagline:
-  zh: 人像 · 婚礼 · 二次元
-  en: Portrait · Wedding · Anime-inspired
-avatarKey: demo/site/avatar.jpg
+  zh: 人像 · Cosplay · 场照
+  en: Portrait · Cosplay · Convention
 social:
   - label: GitHub
     url: https://github.com/WaltYoung
@@ -13,8 +12,8 @@ social:
 
 ## 关于我
 
-用镜头记录真实与角色之间的缝隙。本站作品图床为腾讯云 COS，内容与代码托管在 GitHub。
+我是 WaltYoung，常驻武汉，主要拍摄二次元漫展场照与人像 Cosplay。本站收录历场活动相册，大图托管在 Cloudflare R2，页面由 Astro 构建并通过 GitHub Pages 发布。
 
 ## About
 
-I photograph the space between candid moments and imagined characters. Images are served from Tencent COS; this site is built with Astro.
+I'm WaltYoung, based in Wuhan, focusing on anime convention portraits and cosplay photography. Galleries are hosted on Cloudflare R2; this site is built with Astro and published on GitHub Pages.

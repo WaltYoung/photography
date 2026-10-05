@@ -3,7 +3,12 @@ import type { Lang } from '../types/lang';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { alternateUrls, canonicalUrl } from '../lib/seo';
+import { staticAsset } from '../lib/branding';
 import '../styles/global.css';
+
+const favicon32 = staticAsset('favicon-32x32.png');
+const favicon16 = staticAsset('favicon-16x16.png');
+const appleTouchIcon = staticAsset('apple-touch-icon.png');
 
 interface Props {
 	lang: Lang;
@@ -19,8 +24,8 @@ const pageTitle = title ?? (lang === 'zh' ? 'WaltYoung 摄影' : 'WaltYoung Phot
 const pageDescription =
 	description ??
 	(lang === 'zh'
-		? '摄影师个人作品站：婚礼、二次元与人像。'
-		: 'Photography portfolio: wedding, anime-inspired, and portrait work.');
+		? '二次元漫展场照与人像 Cosplay 作品集。'
+		: 'Anime convention portraits and cosplay photography.');
 const canonical = canonicalUrl(lang, path);
 const alternates = alternateUrls(path);
 const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -31,7 +36,9 @@ const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+		<link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
+		<link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
 		<title>{pageTitle}</title>
 		<meta name="description" content={pageDescription} />
 		<link rel="canonical" href={canonical} />
