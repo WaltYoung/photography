@@ -11,6 +11,9 @@ tags:
   - slug: convention
     zh: "场照"
     en: "Convention"
+  - slug: studio
+    zh: "棚拍"
+    en: "Studio"
 takenAt: 2026-07-18T06:18:06.000Z
 featured: false
 title:
