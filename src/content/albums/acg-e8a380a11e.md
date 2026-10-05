@@ -7,8 +7,8 @@ title:
   zh: "2026.05.03 武汉梦乡漫展 · 小昔涟"
   en: "2026.05.03 武汉梦乡漫展 · 小昔涟"
 summary:
-  zh: "小昔涟 · 2026.05.03 武汉梦乡漫展"
-  en: "小昔涟 · 2026.05.03 武汉梦乡漫展"
+  zh: "出镜："
+  en: "the people in the photo："
 coverKey: "photo/acg/2026.05.03 武汉梦乡漫展/小昔涟/_MG_9867.jpg"
 photoOrder:
   - p-4bc0d83a2e

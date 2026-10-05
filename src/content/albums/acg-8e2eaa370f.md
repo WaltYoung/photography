@@ -4,11 +4,11 @@ category: anime
 publishedAt: 2026-05-03
 featured: true
 title:
-  zh: "2026.05.03 武汉梦乡漫展 · 妲己_盒子"
-  en: "2026.05.03 武汉梦乡漫展 · 妲己_盒子"
+  zh: "2026.05.03 武汉梦乡漫展 · 妲己「抹茶甜心」"
+  en: "2026.05.03 武汉梦乡漫展 · 妲己「抹茶甜心」"
 summary:
-  zh: "妲己_盒子 · 2026.05.03 武汉梦乡漫展"
-  en: "妲己_盒子 · 2026.05.03 武汉梦乡漫展"
+  zh: "出镜：盒子"
+  en: "the people in the photo：盒子"
 coverKey: "photo/acg/2026.05.03 武汉梦乡漫展/妲己_盒子/_MG_0030.jpg"
 photoOrder:
   - p-7c8ba6db5f

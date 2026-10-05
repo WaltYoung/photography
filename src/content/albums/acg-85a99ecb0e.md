@@ -7,8 +7,8 @@ title:
   zh: "2026.08.08 武汉环形宇宙漫展 · 东方曜"
   en: "2026.08.08 武汉环形宇宙漫展 · 东方曜"
 summary:
-  zh: "东方曜 · 2026.08.08 武汉环形宇宙漫展"
-  en: "东方曜 · 2026.08.08 武汉环形宇宙漫展"
+  zh: "出镜：小白"
+  en: "the people in the photo：小白"
 coverKey: "photo/acg/2026.08.08 武汉环形宇宙漫展/东方曜/_MG_1469_2.png"
 photoOrder:
   - p-67b7896a7c

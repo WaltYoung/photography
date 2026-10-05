@@ -12,6 +12,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PHOTOS_DIR = path.join(ROOT, 'src/content/photos');
 const ALBUMS_DIR = path.join(ROOT, 'src/content/albums');
 
+const ALBUM_SUMMARY_ZH = '出镜：';
+const ALBUM_SUMMARY_EN = 'the people in the photo：';
+
 const STANDARD_TAGS = [
 	{ slug: 'portrait', zh: '人像', en: 'Portrait' },
 	{ slug: 'cosplay', zh: 'Cosplay', en: 'Cosplay' },
@@ -225,8 +228,8 @@ title:
   zh: ${yamlString(titleZh)}
   en: ${yamlString(titleEn)}
 summary:
-  zh: ${yamlString(`${album.character} · ${album.event}`)}
-  en: ${yamlString(`${album.character} · ${album.event}`)}
+  zh: ${yamlString(ALBUM_SUMMARY_ZH)}
+  en: ${yamlString(ALBUM_SUMMARY_EN)}
 coverKey: ${yamlString(coverKey)}
 photoOrder:
 ${photoIds.map((id) => `  - ${id}`).join('\n')}

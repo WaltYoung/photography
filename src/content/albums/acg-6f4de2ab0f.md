@@ -7,8 +7,8 @@ title:
   zh: "2026.07.18 武汉梦乡漫展 · 芙宁娜"
   en: "2026.07.18 武汉梦乡漫展 · 芙宁娜"
 summary:
-  zh: "芙宁娜 · 2026.07.18 武汉梦乡漫展"
-  en: "芙宁娜 · 2026.07.18 武汉梦乡漫展"
+  zh: "出镜：小白"
+  en: "the people in the photo：小白"
 coverKey: "photo/acg/2026.07.18 武汉梦乡漫展/芙宁娜/_MG_1036.jpg"
 photoOrder:
   - p-b6f7bdcf57
