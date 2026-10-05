@@ -3,6 +3,7 @@ import AlbumCard from '../../components/AlbumCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
 	getAlbumCoverSize,
+	getAlbumPhotoCounts,
 	getAlbumsByCategory,
 	getCategoriesSorted,
 	getCategoryBySlug,
@@ -22,7 +23,10 @@ export async function getStaticPaths() {
 const lang = 'zh';
 const { category } = Astro.props;
 const path = `categories/${category.data.slug}`;
-const albums = await getAlbumsByCategory(category.data.slug);
+const [albums, photoCounts] = await Promise.all([
+	getAlbumsByCategory(category.data.slug),
+	getAlbumPhotoCounts(),
+]);
 const albumsWithCover = await Promise.all(
 	albums.map(async (album) => ({
 		album,
@@ -49,6 +53,7 @@ const albumsWithCover = await Promise.all(
 				<AlbumCard
 					album={album}
 					lang={lang}
+					photoCount={photoCounts.get(album.data.slug) ?? 0}
 					coverWidth={cover?.width}
 					coverHeight={cover?.height}
 				/>

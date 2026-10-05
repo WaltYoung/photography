@@ -1,12 +1,12 @@
 ---
 import AlbumCard from '../../../components/AlbumCard.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getAlbumCoverSize, getAlbumsSorted } from '../../../lib/content';
+import { getAlbumCoverSize, getAlbumPhotoCounts, getAlbumsSorted } from '../../../lib/content';
 import { t } from '../../../i18n/ui';
 
 const lang = 'en';
 const path = 'albums';
-const albums = await getAlbumsSorted();
+const [albums, photoCounts] = await Promise.all([getAlbumsSorted(), getAlbumPhotoCounts()]);
 const albumsWithCover = await Promise.all(
 	albums.map(async (album) => ({
 		album,
@@ -23,6 +23,7 @@ const albumsWithCover = await Promise.all(
 				<AlbumCard
 					album={album}
 					lang={lang}
+					photoCount={photoCounts.get(album.data.slug) ?? 0}
 					coverWidth={cover?.width}
 					coverHeight={cover?.height}
 				/>

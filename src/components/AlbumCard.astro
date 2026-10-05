@@ -2,18 +2,19 @@
 import type { Lang } from '../types/lang';
 import type { AlbumEntry } from '../lib/content';
 import { albumTitle } from '../lib/content';
-import { t } from '../i18n/ui';
+import { formatAlbumPhotoCount, t } from '../i18n/ui';
 import { formatDate, localePath, localized } from '../i18n/utils';
 import CosImage from './CosImage.astro';
 
 interface Props {
 	album: AlbumEntry;
 	lang: Lang;
+	photoCount: number;
 	coverWidth?: number;
 	coverHeight?: number;
 }
 
-const { album, lang, coverWidth, coverHeight } = Astro.props;
+const { album, lang, photoCount, coverWidth, coverHeight } = Astro.props;
 const href = localePath(lang, `albums/${album.data.slug}`);
 ---
 
@@ -34,7 +35,7 @@ const href = localePath(lang, `albums/${album.data.slug}`);
 				{formatDate(album.data.publishedAt, lang)}
 			</time>
 			<h3 class="text-lg font-semibold leading-snug text-ink">{albumTitle(album, lang)}</h3>
-			<p class="line-clamp-2 text-sm text-muted">{localized(album.data.summary, lang)}</p>
+			<p class="text-sm text-muted">{formatAlbumPhotoCount(photoCount, lang)}</p>
 			<span class="inline-block text-sm font-medium text-accent">{t('actions', 'viewAlbum', lang)} →</span>
 		</div>
 	</a>

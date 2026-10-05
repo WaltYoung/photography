@@ -8,6 +8,7 @@ import {
 	getAlbumsByCategory,
 	getCategoriesSorted,
 	getAlbumCoverSize,
+	getAlbumPhotoCounts,
 	getCategoryCoverSize,
 	getBio,
 	getFeaturedAlbums,
@@ -21,11 +22,12 @@ import { cosUrl } from '../lib/cos';
 const lang = 'zh';
 const path = '';
 
-const [categories, featuredAlbums, featuredPhotos, bio] = await Promise.all([
+const [categories, featuredAlbums, featuredPhotos, bio, photoCounts] = await Promise.all([
 	getCategoriesSorted(),
 	getFeaturedAlbums(4),
 	getFeaturedPhotos(8),
 	getBio(lang),
+	getAlbumPhotoCounts(),
 ]);
 
 const categoryCounts = await Promise.all(
@@ -109,6 +111,7 @@ const featuredWithCover = await Promise.all(
 					<AlbumCard
 						album={album}
 						lang={lang}
+						photoCount={photoCounts.get(album.data.slug) ?? 0}
 						coverWidth={cover?.width}
 						coverHeight={cover?.height}
 					/>

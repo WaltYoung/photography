@@ -21,6 +21,9 @@ const ui = {
 		latestAlbums: { zh: '最新相册', en: 'Latest albums' },
 		byCategory: { zh: '按分类浏览', en: 'Browse by category' },
 	},
+	album: {
+		photoCount: { zh: '共{n}张照片', en: '{n} photos' },
+	},
 	photo: {
 		exifTitle: { zh: '拍摄参数', en: 'Capture details' },
 		make: { zh: '机身', en: 'Camera' },
@@ -64,6 +67,10 @@ export function t<K extends keyof typeof ui>(
 ): string {
 	const entry = ui[section][key] as { zh: string; en: string };
 	return entry[lang];
+}
+
+export function formatAlbumPhotoCount(count: number, lang: Lang): string {
+	return t('album', 'photoCount', lang).replace('{n}', String(count));
 }
 
 export { ui };

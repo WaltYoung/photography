@@ -44,6 +44,17 @@ export async function getAlbumsByCategory(categorySlug: string): Promise<AlbumEn
 	return albums.filter((a) => a.data.category === categorySlug);
 }
 
+/** 各相册照片数量（slug → count） */
+export async function getAlbumPhotoCounts(): Promise<Map<string, number>> {
+	const photos = await getCollection('photos');
+	const counts = new Map<string, number>();
+	for (const p of photos) {
+		const slug = p.data.album;
+		counts.set(slug, (counts.get(slug) ?? 0) + 1);
+	}
+	return counts;
+}
+
 export async function getPhotosForAlbum(albumSlug: string): Promise<PhotoEntry[]> {
 	const photos = await getCollection('photos');
 	const albumPhotos = photos.filter((p) => p.data.album === albumSlug);
