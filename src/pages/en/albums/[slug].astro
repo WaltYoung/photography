@@ -56,5 +56,5 @@ const galleryId = `gallery-${album.data.slug}`;
 		</time>
 		<p class="max-w-2xl text-muted">{localized(album.data.summary, lang)}</p>
 	</header>
-	<PhotoGallery photos={photos} lang={lang} galleryId={galleryId} />
+	<PhotoGallery photos={photos} lang={lang} galleryId={galleryId} showExif />
 </BaseLayout>

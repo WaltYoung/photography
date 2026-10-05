@@ -2,6 +2,7 @@
 import type { Lang } from '../types/lang';
 import type { PhotoEntry } from '../lib/content';
 import { photoDisplayTitle } from '../lib/content';
+import ExifPanel from './ExifPanel.astro';
 import { cosUrl } from '../lib/cos';
 import { localized } from '../i18n/utils';
 
@@ -9,30 +10,42 @@ interface Props {
 	photos: PhotoEntry[];
 	lang: Lang;
 	galleryId: string;
+	showExif?: boolean;
 }
 
-const { photos, lang, galleryId } = Astro.props;
+const { photos, lang, galleryId, showExif = false } = Astro.props;
 ---
 
 <div class="masonry" id={galleryId}>
 	{
 		photos.map((photo) => (
-			<a
-				href={cosUrl(photo.data.imageKey)}
-				class="masonry-item group block overflow-hidden rounded-xl border border-ink/10 bg-card shadow-sm"
-				data-pswp-width={photo.data.width}
-				data-pswp-height={photo.data.height}
-			>
-				<img
-					src={cosUrl(photo.data.thumbKey)}
-					alt={localized(photo.data.alt, lang)}
-					class="block h-auto w-full transition duration-500 group-hover:scale-[1.01]"
-					loading="lazy"
-					width={photo.data.width}
-					height={photo.data.height}
-				/>
+			<div class="masonry-item overflow-hidden rounded-xl border border-ink/10 bg-card shadow-sm">
+				<a
+					href={cosUrl(photo.data.imageKey)}
+					class="group block"
+					data-pswp-width={photo.data.width}
+					data-pswp-height={photo.data.height}
+				>
+					<img
+						src={cosUrl(photo.data.thumbKey)}
+						alt={localized(photo.data.alt, lang)}
+						class="block h-auto w-full transition duration-500 group-hover:scale-[1.01]"
+						loading="lazy"
+						width={photo.data.width}
+						height={photo.data.height}
+					/>
+				</a>
 				<p class="px-2 py-2 text-sm text-ink">{photoDisplayTitle(photo, lang)}</p>
-			</a>
+				{showExif && photo.data.exif && (
+					<ExifPanel
+						lang={lang}
+						exif={photo.data.exif}
+						takenAt={photo.data.takenAt}
+						defaultOpen
+						class="mx-2 mb-2 border-0 bg-canvas/80 p-3"
+					/>
+				)}
+			</div>
 		))
 	}
 </div>

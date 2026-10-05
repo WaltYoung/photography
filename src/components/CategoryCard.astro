@@ -9,9 +9,11 @@ interface Props {
 	category: CategoryEntry;
 	lang: Lang;
 	albumCount: number;
+	coverWidth?: number;
+	coverHeight?: number;
 }
 
-const { category, lang, albumCount } = Astro.props;
+const { category, lang, albumCount, coverWidth, coverHeight } = Astro.props;
 const href = localePath(lang, `categories/${category.data.slug}`);
 ---
 
@@ -19,12 +21,14 @@ const href = localePath(lang, `categories/${category.data.slug}`);
 	href={href}
 	class="flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-card shadow-sm transition hover:border-accent/30 md:flex-row"
 >
-	<div class="aspect-[16/10] md:aspect-auto md:w-2/5">
+	<div class="shrink-0 overflow-hidden bg-canvas md:w-2/5">
 		<CosImage
 			objectKey={category.data.coverKey}
 			alt={localized(category.data.title, lang)}
-			class="h-full w-full object-cover"
+			class="block h-auto w-full"
 			loading="lazy"
+			width={coverWidth}
+			height={coverHeight}
 		/>
 	</div>
 	<div class="flex flex-1 flex-col justify-center gap-2 p-5">

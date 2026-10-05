@@ -8,6 +8,7 @@ import {
 	getAlbumsByCategory,
 	getCategoriesSorted,
 	getAlbumCoverSize,
+	getCategoryCoverSize,
 	getBio,
 	getFeaturedAlbums,
 	getFeaturedPhotos,
@@ -31,6 +32,7 @@ const categoryCounts = await Promise.all(
 	categories.map(async (c) => ({
 		category: c,
 		count: (await getAlbumsByCategory(c.data.slug)).length,
+		cover: await getCategoryCoverSize(c),
 	})),
 );
 
@@ -84,8 +86,14 @@ const featuredWithCover = await Promise.all(
 	<section class="mb-12">
 		<h2 class="mb-5 font-serif text-2xl text-ink">{t('home', 'byCategory', lang)}</h2>
 		<div class="grid gap-4">
-			{categoryCounts.map(({ category, count }) => (
-				<CategoryCard category={category} lang={lang} albumCount={count} />
+			{categoryCounts.map(({ category, count, cover }) => (
+				<CategoryCard
+					category={category}
+					lang={lang}
+					albumCount={count}
+					coverWidth={cover?.width}
+					coverHeight={cover?.height}
+				/>
 			))}
 		</div>
 	</section>

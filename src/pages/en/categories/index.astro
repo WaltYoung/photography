@@ -1,7 +1,7 @@
 ---
 import CategoryCard from '../../../components/CategoryCard.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getAlbumsByCategory, getCategoriesSorted } from '../../../lib/content';
+import { getAlbumsByCategory, getCategoriesSorted, getCategoryCoverSize } from '../../../lib/content';
 import { t } from '../../../i18n/ui';
 
 const lang = 'en';
@@ -12,6 +12,7 @@ const withCounts = await Promise.all(
 	categories.map(async (category) => ({
 		category,
 		count: (await getAlbumsByCategory(category.data.slug)).length,
+		cover: await getCategoryCoverSize(category),
 	})),
 );
 ---
@@ -19,8 +20,14 @@ const withCounts = await Promise.all(
 <BaseLayout lang={lang} path={path} title={t('nav', 'categories', lang)}>
 	<h1 class="mb-8 font-serif text-3xl text-ink">{t('nav', 'categories', lang)}</h1>
 	<div class="grid gap-4">
-		{withCounts.map(({ category, count }) => (
-			<CategoryCard category={category} lang={lang} albumCount={count} />
+		{withCounts.map(({ category, count, cover }) => (
+			<CategoryCard
+				category={category}
+				lang={lang}
+				albumCount={count}
+				coverWidth={cover?.width}
+				coverHeight={cover?.height}
+			/>
 		))}
 	</div>
 </BaseLayout>

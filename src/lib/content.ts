@@ -135,17 +135,41 @@ export function categoryTitle(category: CategoryEntry, lang: Lang): string {
 	return localized(category.data.title, lang);
 }
 
+function dimensionsForCoverKey(
+	photos: PhotoEntry[],
+	coverKey: string,
+): { width: number; height: number } | null {
+	const match = photos.find(
+		(p) => p.data.imageKey === coverKey || p.data.thumbKey === coverKey,
+	);
+	if (!match) return null;
+	return { width: match.data.width, height: match.data.height };
+}
+
 /** 相册封面宽高（匹配 coverKey，否则取相册首图） */
 export async function getAlbumCoverSize(
 	album: AlbumEntry,
 ): Promise<{ width: number; height: number } | null> {
 	const photos = await getCollection('photos');
 	const inAlbum = photos.filter((p) => p.data.album === album.data.slug);
-	const match = inAlbum.find(
-		(p) =>
-			p.data.imageKey === album.data.coverKey || p.data.thumbKey === album.data.coverKey,
-	);
-	const source = match ?? inAlbum[0];
+	const fromCover = dimensionsForCoverKey(photos, album.data.coverKey);
+	if (fromCover) return fromCover;
+	const source = inAlbum[0];
 	if (!source) return null;
 	return { width: source.data.width, height: source.data.height };
+}
+
+/** 分类封面宽高（匹配 coverKey，否则取该分类下第一本相册封面） */
+export async function getCategoryCoverSize(
+	category: CategoryEntry,
+): Promise<{ width: number; height: number } | null> {
+	const photos = await getCollection('photos');
+	const direct = dimensionsForCoverKey(photos, category.data.coverKey);
+	if (direct) return direct;
+	const albums = await getAlbumsByCategory(category.data.slug);
+	for (const album of albums) {
+		const size = await getAlbumCoverSize(album);
+		if (size) return size;
+	}
+	return null;
 }

@@ -7,9 +7,12 @@ interface Props {
 	lang: Lang;
 	exif: NonNullable<CollectionEntry<'photos'>['data']['exif']>;
 	takenAt: Date;
+	/** 为 true 时 <details> 默认展开 */
+	defaultOpen?: boolean;
+	class?: string;
 }
 
-const { lang, exif, takenAt } = Astro.props;
+const { lang, exif, takenAt, defaultOpen = false, class: className } = Astro.props;
 
 const rows: { label: string; value: string | number | undefined }[] = [
 	{ label: t('photo', 'make', lang), value: exif.make && exif.model ? `${exif.make} ${exif.model}` : exif.model ?? exif.make },
@@ -25,7 +28,7 @@ const visible = rows.filter((r) => r.value !== undefined && r.value !== '');
 
 {
 	visible.length > 0 && (
-		<details class="rounded-xl border border-ink/10 bg-card p-4 open:shadow-sm">
+		<details class:list={['rounded-xl border border-ink/10 bg-card p-4 open:shadow-sm', className]} open={defaultOpen || undefined}>
 			<summary class="cursor-pointer font-medium text-ink">{t('photo', 'exifTitle', lang)}</summary>
 			<dl class="mt-4 grid gap-2 text-sm sm:grid-cols-2">
 				{visible.map((row) => (
