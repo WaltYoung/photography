@@ -70,7 +70,9 @@ const featuredWithCover = await Promise.all(
 					<CosImage
 						objectKey={heroPhoto.data.imageKey}
 						alt={localized(heroPhoto.data.alt, lang)}
-						class="aspect-[4/3] w-full rounded-xl object-cover"
+						class="block h-auto w-full rounded-xl"
+						width={heroPhoto.data.width}
+						height={heroPhoto.data.height}
 						loading="eager"
 					/>
 					<figcaption class="mt-3 text-sm text-muted">{localized(heroPhoto.data.title, lang)}</figcaption>
