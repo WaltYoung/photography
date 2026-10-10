@@ -9,4 +9,4 @@ social:
 
 ## About
 
-I'm WaltYoung, based in Hangzhou, focusing on anime convention portraits, studio work, and cosplay photography. Galleries are hosted on Cloudflare R2; this site is built with Astro and published on GitHub Pages.
+I'm WaltYoung, a programmer in service, based in Hangzhou, focusing on anime convention portraits, studio work, and cosplay photography. Galleries are hosted on Cloudflare R2; this site is built with Astro and published on GitHub Pages.
