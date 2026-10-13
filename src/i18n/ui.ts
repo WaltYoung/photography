@@ -20,6 +20,8 @@ const ui = {
 		featured: { zh: '精选', en: 'Featured' },
 		latestAlbums: { zh: '最新相册', en: 'Latest albums' },
 		byCategory: { zh: '按分类浏览', en: 'Browse by category' },
+		showcaseKicker: { zh: 'Photography Portfolio', en: 'Photography Portfolio' },
+		showcaseAbout: { zh: '关于我', en: 'About' },
 	},
 	album: {
 		photoCount: { zh: '共{n}张照片', en: '{n} photos' },
@@ -53,6 +55,7 @@ const ui = {
 			zh: 'Astro · Cloudflare R2 · GitHub Pages',
 			en: 'Astro · Cloudflare R2 · GitHub Pages',
 		},
+		themeLabel: { zh: '界面版本', en: 'Site theme' },
 	},
 	notFound: {
 		title: { zh: '页面未找到', en: 'Page not found' },

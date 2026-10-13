@@ -1,3 +1,6 @@
+/** npm 包 / 站点发布版本 */
+export const SITE_PACKAGE_VERSION = '1.1.0';
+
 /** 站点首次上线年份（用于页脚版权区间） */
 export const SITE_START_YEAR = 2026;
 

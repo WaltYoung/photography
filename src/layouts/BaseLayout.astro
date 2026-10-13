@@ -2,6 +2,8 @@
 import type { Lang } from '../types/lang';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import ThemeBootScript from '../components/ThemeBootScript.astro';
+import type { SiteThemeVersion } from '../lib/theme';
 import { alternateUrls, canonicalUrl } from '../lib/seo';
 import { staticAsset } from '../lib/branding';
 import '../styles/global.css';
@@ -20,6 +22,8 @@ interface Props {
 }
 
 const { lang, path, title, description, ogImage, pagefindMeta } = Astro.props;
+const siteTheme: SiteThemeVersion = Astro.locals.siteTheme;
+const isHome = path === '';
 const pageTitle = title ?? (lang === 'zh' ? 'WaltYoung 摄影' : 'WaltYoung Photography');
 const pageDescription =
 	description ??
@@ -32,8 +36,9 @@ const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 ---
 
 <!doctype html>
-<html lang={htmlLang}>
+<html lang={htmlLang} data-theme={siteTheme}>
 	<head>
+		<ThemeBootScript />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
@@ -52,10 +57,13 @@ const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 		<meta name="generator" content={Astro.generator} />
 	</head>
 	<body>
-		<SiteHeader lang={lang} path={path} />
+		<SiteHeader lang={lang} path={path} siteTheme={siteTheme} overlay={isHome && siteTheme === '1.1.0'} />
 		<main
 			id="main"
-			class="mx-auto min-h-[60vh] max-w-6xl px-4 py-8 md:px-6"
+			class:list={[
+				'mx-auto min-h-[60vh] max-w-6xl px-4 md:px-6',
+				isHome && siteTheme === '1.1.0' ? 'pb-8 pt-0' : 'py-8',
+			]}
 			data-pagefind-body
 		>
 			{
@@ -66,6 +74,6 @@ const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 			}
 			<slot />
 		</main>
-		<SiteFooter lang={lang} />
+		<SiteFooter lang={lang} siteTheme={siteTheme} />
 	</body>
 </html>

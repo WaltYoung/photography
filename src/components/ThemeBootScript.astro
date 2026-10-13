@@ -1,0 +1,15 @@
+---
+import { DEFAULT_SITE_THEME } from '../lib/theme';
+---
+
+<script is:inline define:vars={{ defaultTheme: DEFAULT_SITE_THEME }}>
+	(function () {
+		var match = document.cookie.match(/(?:^|; )site-theme=([^;]+)/);
+		var value = match ? decodeURIComponent(match[1]) : defaultTheme;
+		if (value === '1.0.0' || value === '1.1.0') {
+			document.documentElement.dataset.theme = value;
+		} else {
+			document.documentElement.dataset.theme = defaultTheme;
+		}
+	})();
+</script>

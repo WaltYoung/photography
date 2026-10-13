@@ -1,133 +1,16 @@
 ---
-import AlbumCard from '../components/AlbumCard.astro';
-import CategoryCard from '../components/CategoryCard.astro';
-import CosImage from '../components/CosImage.astro';
-import PhotoCard from '../components/PhotoCard.astro';
+import HomeView from '../components/home/HomeView.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import {
-	getAlbumsByCategory,
-	getCategoriesSorted,
-	getAlbumCoverSize,
-	getAlbumPhotoCounts,
-	getCategoryCoverSize,
-	getBio,
-	getFeaturedAlbums,
-	getFeaturedPhotos,
-	photoDisplayTitle,
-} from '../lib/content';
-import { t } from '../i18n/ui';
-import { localePath, localized } from '../i18n/utils';
+import { getFeaturedPhotos } from '../lib/content';
 import { cosUrl } from '../lib/cos';
 
 const lang = 'zh';
 const path = '';
-
-const [categories, featuredAlbums, featuredPhotos, bio, photoCounts] = await Promise.all([
-	getCategoriesSorted(),
-	getFeaturedAlbums(4),
-	getFeaturedPhotos(8),
-	getBio(lang),
-	getAlbumPhotoCounts(),
-]);
-
-const categoryCounts = await Promise.all(
-	categories.map(async (c) => ({
-		category: c,
-		count: (await getAlbumsByCategory(c.data.slug)).length,
-		cover: await getCategoryCoverSize(c),
-	})),
-);
-
+const siteTheme = Astro.locals.siteTheme;
+const featuredPhotos = await getFeaturedPhotos(8);
 const heroPhoto = featuredPhotos[0];
-const featuredWithCover = await Promise.all(
-	featuredAlbums.map(async (album) => ({
-		album,
-		cover: await getAlbumCoverSize(album),
-	})),
-);
 ---
 
 <BaseLayout lang={lang} path={path} ogImage={heroPhoto ? cosUrl(heroPhoto.data.imageKey) : undefined}>
-	<section class="mb-12 grid gap-8 md:grid-cols-2 md:items-center">
-		<div class="space-y-5">
-			{
-				bio && (
-					<>
-						<p class="text-sm uppercase tracking-[0.2em] text-accent">Portfolio</p>
-						<h1 class="font-serif text-4xl leading-tight text-ink md:text-5xl">
-							{bio.data.name}
-						</h1>
-						<p class="text-lg text-muted">{bio.data.tagline}</p>
-					</>
-				)
-			}
-			<a
-				href={localePath(lang, 'albums')}
-				class="inline-flex rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-canvas transition hover:bg-accent"
-			>
-				{t('actions', 'viewWork', lang)}
-			</a>
-		</div>
-		{
-			heroPhoto && (
-				<figure class="overflow-hidden rounded-2xl border border-ink/10 bg-card p-3 shadow-md">
-					<CosImage
-						objectKey={heroPhoto.data.imageKey}
-						alt={localized(heroPhoto.data.alt, lang)}
-						class="block h-auto w-full rounded-xl"
-						width={heroPhoto.data.width}
-						height={heroPhoto.data.height}
-						loading="eager"
-					/>
-					<figcaption class="mt-3 text-sm text-muted">{photoDisplayTitle(heroPhoto, lang)}</figcaption>
-				</figure>
-			)
-		}
-	</section>
-
-	<section class="mb-12">
-		<h2 class="mb-5 font-serif text-2xl text-ink">{t('home', 'byCategory', lang)}</h2>
-		<div class="grid gap-4">
-			{categoryCounts.map(({ category, count, cover }) => (
-				<CategoryCard
-					category={category}
-					lang={lang}
-					albumCount={count}
-					coverWidth={cover?.width}
-					coverHeight={cover?.height}
-				/>
-			))}
-		</div>
-	</section>
-
-	<section class="mb-12">
-		<div class="mb-5 flex items-end justify-between gap-4">
-			<h2 class="font-serif text-2xl text-ink">{t('home', 'latestAlbums', lang)}</h2>
-			<a href={localePath(lang, 'albums')} class="text-sm text-accent">{t('actions', 'allAlbums', lang)}</a>
-		</div>
-		<div class="masonry">
-			{
-				featuredWithCover.map(({ album, cover }) => (
-					<AlbumCard
-						album={album}
-						lang={lang}
-						photoCount={photoCounts.get(album.data.slug) ?? 0}
-						coverWidth={cover?.width}
-						coverHeight={cover?.height}
-					/>
-				))
-			}
-		</div>
-	</section>
-
-	<section>
-		<h2 class="mb-5 font-serif text-2xl text-ink">{t('home', 'featured', lang)}</h2>
-		<div class="flex gap-4 overflow-x-auto pb-2">
-			{featuredPhotos.map((photo) => (
-				<div class="w-56 shrink-0">
-					<PhotoCard photo={photo} lang={lang} />
-				</div>
-			))}
-		</div>
-	</section>
+	<HomeView lang={lang} siteTheme={siteTheme} />
 </BaseLayout>

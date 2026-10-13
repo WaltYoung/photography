@@ -19,6 +19,13 @@ astro dev --background
 
 本地预览：`http://localhost:4321/photography/`（含 `base` 子路径）。
 
+## 界面版本
+
+- **1.0.0（里程碑）**：浅色卡片布局，初版作品集样式。
+- **1.1.0**：暗色全屏头图 + 薄荷绿强调色（作品集展示，非简历页）。
+
+页脚 **界面版本** 可切换；偏好写入 Cookie `site-theme`。逻辑见 `src/lib/theme.ts`、`src/middleware.ts`。
+
 ## 构建与搜索
 
 ```bash

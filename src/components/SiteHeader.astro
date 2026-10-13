@@ -1,5 +1,6 @@
 ---
 import type { Lang } from '../types/lang';
+import type { SiteThemeVersion } from '../lib/theme';
 import { t } from '../i18n/ui';
 import { localePath } from '../i18n/utils';
 import LangSwitch from './LangSwitch.astro';
@@ -7,9 +8,11 @@ import LangSwitch from './LangSwitch.astro';
 interface Props {
 	lang: Lang;
 	path: string;
+	siteTheme: SiteThemeVersion;
+	overlay?: boolean;
 }
 
-const { lang, path } = Astro.props;
+const { lang, path, overlay = false } = Astro.props;
 
 const links = [
 	{ href: localePath(lang, ''), label: t('nav', 'home', lang) },
@@ -21,7 +24,14 @@ const links = [
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b border-ink/10 bg-canvas/90 backdrop-blur-md">
+<header
+	class:list={[
+		'sticky top-0 z-40 backdrop-blur-md',
+		overlay
+			? 'border-b border-transparent bg-[rgb(8_12_10/0.35)]'
+			: 'border-b border-ink/10 bg-canvas/90',
+	]}
+>
 	<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
 		<a href={localePath(lang, '')} class="font-serif text-lg tracking-tight text-ink md:text-xl">
 			WaltYoung

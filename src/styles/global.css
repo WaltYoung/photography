@@ -6,8 +6,19 @@
 	--color-muted: #6b6560;
 	--color-accent: #c45c4a;
 	--color-card: #ffffff;
+	--color-hero-overlay: rgb(8 12 10 / 0.62);
 	--font-serif: 'Georgia', 'Noto Serif SC', ui-serif, serif;
 	--font-sans: system-ui, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+html[data-theme='1.1.0'] {
+	--color-canvas: #0b100e;
+	--color-ink: #f4f7f5;
+	--color-muted: #9fb0a6;
+	--color-accent: #98ffd9;
+	--color-card: #141c18;
+	--color-hero-overlay: rgb(6 10 8 / 0.72);
+	color-scheme: dark;
 }
 
 html {
@@ -76,4 +87,63 @@ body {
 .masonry-item {
 	break-inside: avoid;
 	margin-bottom: 1rem;
+}
+
+/* 1.1.0 首页全屏头图（作品集导向，非简历结构） */
+.showcase-hero {
+	position: relative;
+	margin-inline: calc(-1 * var(--hero-bleed, 1rem));
+	margin-top: calc(-1 * var(--hero-bleed-top, 2rem));
+	min-height: min(88vh, 920px);
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	border-radius: 0 0 1.25rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+	.showcase-hero {
+		--hero-bleed: 1.5rem;
+	}
+}
+
+.showcase-hero__media {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center 22%;
+}
+
+.showcase-hero__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		105deg,
+		var(--color-hero-overlay) 0%,
+		rgb(8 12 10 / 0.45) 48%,
+		rgb(8 12 10 / 0.25) 100%
+	);
+}
+
+.showcase-hero__content {
+	position: relative;
+	z-index: 1;
+	max-width: 36rem;
+	padding: 5.5rem 1.5rem 3rem;
+}
+
+html[data-theme='1.1.0'] .showcase-hero__content .text-ink {
+	color: var(--color-ink);
+}
+
+.theme-switch-btn {
+	@apply rounded-full border border-ink/15 px-3 py-1 text-xs transition;
+}
+
+.theme-switch-btn:hover {
+	@apply border-accent/40 text-accent;
+}
+
+.theme-switch-btn.is-active {
+	@apply border-accent bg-accent/15 text-accent;
 }
