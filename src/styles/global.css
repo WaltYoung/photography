@@ -28,6 +28,13 @@ html {
 body {
 	@apply bg-canvas text-ink antialiased;
 	font-family: var(--font-sans);
+	overflow-x: clip;
+}
+
+.site-container {
+	width: min(100%, 80rem);
+	margin-inline: auto;
+	padding-inline: clamp(1rem, 4vw, 2rem);
 }
 
 .sr-only {
@@ -92,19 +99,15 @@ body {
 /* 1.1.0 首页全屏头图（作品集导向，非简历结构） */
 .showcase-hero {
 	position: relative;
-	margin-inline: calc(-1 * var(--hero-bleed, 1rem));
-	margin-top: calc(-1 * var(--hero-bleed-top, 2rem));
+	width: 100vw;
+	max-width: 100%;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
 	min-height: min(88vh, 920px);
 	display: flex;
 	align-items: center;
 	overflow: hidden;
-	border-radius: 0 0 1.25rem 1.25rem;
-}
-
-@media (min-width: 768px) {
-	.showcase-hero {
-		--hero-bleed: 1.5rem;
-	}
+	border-radius: 0;
 }
 
 .showcase-hero__media {
@@ -128,8 +131,14 @@ body {
 .showcase-hero__content {
 	position: relative;
 	z-index: 1;
+	width: min(100%, 80rem);
+	margin-inline: auto;
+	padding: clamp(4.5rem, 10vw, 5.5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 3rem);
+}
+
+.showcase-hero__content > .space-y-2,
+.showcase-hero__content > .space-y-6 > .space-y-2 {
 	max-width: 36rem;
-	padding: 5.5rem 1.5rem 3rem;
 }
 
 html[data-theme='1.1.0'] .showcase-hero__content .text-ink {
